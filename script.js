@@ -1,5 +1,5 @@
 let units = "metric";
-
+//Location GPS//
 async function getLocation() {
     return new Promise((resolve, reject) => {
 
@@ -9,7 +9,7 @@ async function getLocation() {
                 let lon = position.coords.longitude;
 
                 // Use a reverse geocoding API to get the city name
-                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=de`)
                     .then(response => response.json())
                     .then(data => {
                         // Set the current city to the city name from the geocoding data
@@ -21,23 +21,23 @@ async function getLocation() {
                         reject(error);
                     });
             }, error => {
-                resolve("London");
-                alert("Miauuu" + currCity);
+                resolve("Chur");
+                alert("Ihr aktueller Standort ist deaktiviert" );
                 console.error("Error occurred while getting location: ", error);
                 
             });
         } else {
-            resolve("London");
-            alert("Error occurred while getting");
+            resolve("Chur");
+            alert("Geolocation wird nicht unterstützt von Ihrem Browser.");
             reject("Geolocation is not supported by this browser.");
         }
     });
 }
-
+//Weather//
 async function getWeather(city) {
     const API_KEY = '38a5ab5231acac96fef7ddc955511a71';
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}&lang=de`);
         const data = await response.json();
         updateWeather(data);
     } catch (error) {
@@ -87,8 +87,9 @@ function convertTimeStamp(timestamp, timezone) {
         timeZone: `Etc/GMT${convertTimezone >= 0 ? "-" : "+"}${Math.abs(convertTimezone)}`,
         hour12: true,
     };
-    return date.toLocaleString("en-US", options);
+    return date.toLocaleString("de", options);
 }
+
 
 // convert country code to name
 function convertCountryCode(country) {
@@ -132,3 +133,25 @@ document.querySelector(".weather_unit_farenheit").addEventListener('click', () =
 document.addEventListener('DOMContentLoaded', () => {
     getLocation().then(getWeather).catch(error => console.error("An error occurred: ", error));
 });
+
+
+// Rainfall
+
+const rainContainer = document.querySelector('.rain');
+
+        function createRaindrop() {
+            const drop = document.createElement('div');
+            drop.classList.add('drop');
+
+            drop.style.left = `${Math.random() * 100}vw`;
+            drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+            drop.style.opacity = Math.random();
+
+            rainContainer.appendChild(drop);
+
+            setTimeout(() => {
+                drop.remove();
+            }, 1000);
+        }
+
+        setInterval(createRaindrop, 20);
