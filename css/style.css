@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background: linear-gradient(to bottom, #2f394c, darkgrey);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    overflow: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60vw !important;
+    background: #17171776;
+    backdrop-filter: blur(3px);
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 2rem;
+    width: 40%;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    opacity: 0; /* Start invisible */
+    animation: fadeIn 0.8s ease-out 0.8s forwards; /* Fade in after 1 second */
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#loadingMessage {
+    display: grid;
+    place-items: center;
+    animation: pulse 2s infinite;
+}
+
+
+.rain {
+    position: fixed;
+    width: 100%;
+    height: 120%;
+    margin-top: -10vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.drop {
+    position: absolute;
+    bottom: 100%;
+    width: 1px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+
+
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the pseudo-element behind the content */
+}
+.weatherheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*WeatherSearch*/
+input {
+    text-align: center !important;
+    border: none;
+    background: #1e1e1e;
+    outline: none;
+    color: #fff;
+    width: 55vw;
+    padding: 0.5rem 2.5rem;
+    border-radius: 5px;
+    transition: color 0.3s ease; /* Added transition property */
+  }
+  
+  
+  input::placeholder {
+    color: #fff;
+    opacity: 0.7;
+  }
+  
+  input:focus::placeholder {
+    opacity: 0;
+  }
+  
+  /* Added a new rule for inactive state */
+  input:not(:focus) {
+    color: #fff; /* Set color back to white on blur */
+    transition: color 0.3s ease; /* Add transition for color change */
+  }
+
+.weathersearch {
+    position: relative;
+}
+
+.weathersearch i {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 15px;
+    color: #fff;
+}
+   /*Suggestions*/
+#suggestions {
+    text-align: center;
+    list-style-type: none;
+    background-color: #e1e1e179;
+    color: black;
+    padding: 0;
+    margin: 0;
+    border-radius: 0px 0px 10px 10px;
+    max-width: 55vw;
+    
+}
+
+#suggestions li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#suggestions li:not(:last-child) {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #000;
+}
+
+#suggestions li:hover {
+    background-color: #312f689c;
+}
+
+.weatherunits {
+    position: relative;
+    width: 60px;
+    height: 30px;
+}
+.toggle-metric{
+
+    margin-left: -6px;
+}
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 3px 0;;
+    background-color: #06affdba;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #66bb6a;
+}
+.toggle-metric, .toggle-imperial {
+    position: relative;
+   
+    z-index: 2;
+}
+.toggle-handle {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background-color: #1e1e1e;
+    border-radius: 50%;
+    transition: left 0.2s;
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-handle {
+    left: 30px;
+}
+
+.toggle-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    pointer-events: none;
+}
+
+
+.weatherunits span {
+    cursor: pointer;
+}
+
+.weatherunits span:first-child {
+    margin-right: 0.5rem;
+}
+
+.weatherbody {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.weatherdatetime {
+    margin-bottom: 2rem;
+    font-size: 14px;
+}
+
+.weatherforecast {
+    background: #1e1e1e;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+}
+/* 3Day forecast */
+.three-day-forecast {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+    min-width: 70%; /* Ensure it takes the full width */
+    text-align: center; /* Center text within the container */
+    background-color: #1e1e1e;
+    border-radius: 10px;
+
+}
+
+.forecast-container {
+    display: flex;
+    justify-content: center;
+   
+}
+
+.forecast-day {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+   
+}
+
+.forecast-day h3 {
+    margin-bottom: 10px;
+}
+
+.forecast-day img {
+    width: 50px;
+    height: 50px;
+}
+
+.forecast-day p {
+    margin: 5px 0;
+}
+
+/*End of forecast*/
+.weathericon img {
+    width: 100px;
+}
+
+.weathertemperature {
+    font-size: 1.75rem;
+}
+
+.weatherminmax {
+    display: flex;
+    justify-content: center;
+}
+
+.weatherminmax p {
+    font-size: 14px;
+    margin: 0.5rem;
+}
+
+.weatherinfo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    margin-top: 3rem;
+}
+
+.weathercard {
+    display: flex;
+    align-items: center;
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.weathercard i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.weathercard p {
+    font-size: 14px;
+}
+
+@media(max-width: 936px){
+    .container {
+        width: 90%;
+    }
+
+    .weatherheader {
+        flex-direction: column;
+    }
+
+    .weatherunits {
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 1rem;
+    }
+}
+
+
+@media(max-width: 400px){
+    .weatherinfo {
+        grid-template-columns: none;
+    }
+}

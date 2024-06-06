@@ -5,70 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/buffer.css">
 </head>
 <body>
     <div class="rain"></div>
     <div class="container">
-        <div class="weather__header">
-            <form class="weather__search">
-                <input type="text" placeholder="Search for a city..." class="weather__searchform">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </form> 
-            <div class="weather__units">
-                <span class="weather_unit_celsius">&#176C</span>
-                <span class="weather_unit_farenheit">&#176F</span>
-            </div>
+        <div class="weatherheader">
+            <form class="weathersearch" id="city-form">
+                <input type="text" id="search" class="weathersearchform" placeholder="Stadtname eingeben" autocomplete="off">
+                <ul id="suggestions"></ul>
+            </form>
         </div>
-        <div class="weather__body">
-            <h1 class="weather__city"></h1>
-            <div class="weather__datetime">
+        <div class="weatherbody">
+            <div id="loadingMessage">
+                <div class="lds-ripple"><div></div><div></div></div>
+               <div>Dein Standort wird ermittelt..</div>
             </div>
-            <div class="weather__forecast"></div>
-            <div class="weather__icon">
+             <div id="apiResponse" style="display:none;"></div>
+            <h1 class="weathercity"></h1>
+            <div class="weatherdatetime">
             </div>
-            <p class="weather__temperature">
+            <div class="weatherforecast"></div>
+            <div class="weathericon">
+            </div>
+            <p class="weathertemperature">
             </p>
-            <div class="weather__minmax">
+            <div class="weatherminmax">
                 <p>Min: 12&#176</p>
                 <p>Max: 16&#176</p>
             </div>
         </div>
-
-        <div class="weather__info">
-            <div class="weather__card">
+        <div class="weatherunits">
+            <input type="checkbox" id="toggle" class="toggle-checkbox">
+            <label for="toggle" class="toggle-label">
+                <div class="toggle-text">
+                    <div class="toggle-metric">°C</div>
+                    <div class="toggle-imperial">°F</div>
+                </div>
+                <div class="toggle-handle"></div>
+            </label>
+        </div>
+        
+        <div class="weatherinfo">
+            <div class="weathercard">
                 <i class="fa-solid fa-temperature-full"></i>
                 <div>
                     <p>Fühlt sich an wie</p>
-                    <p class="weather__realfeel">18&#176</p>
+                    <p class="weatherrealfeel">18&#176</p>
                 </div>
             </div>
-            <div class="weather__card">
+            
+            <div class="weathercard">
                 <i class="fa-solid fa-droplet"></i>
                 <div>
-                    <p>Fäuchtigkeit</p>
-                    <p class="weather__humidity">18&#176</p>
+                    <p>Feuchtigkeit</p>
+                    <p class="weatherhumidity">18&#176</p>
                 </div>
             </div>
-            <div class="weather__card">
+            <div class="weathercard">
                 <i class="fa-solid fa-wind"></i>
                 <div>
                     <p>Wind</p>
-                    <p class="weather__wind">18&#176</p>
+                    <p class="weatherwind">18&#176</p>
                 </div>
             </div>
-            <div class="weather__card">
+            <div class="weathercard">
                 <i class="fa-solid fa-gauge-high"></i>
                 <div>
                     <p>Luftdruck</p>
-                    <p class="weather__pressure">18&#176</p>
+                    <p class="weatherpressure">18&#176</p>
                 </div>
             </div>
+            </div>
+            <div id="three-day-forecast" class="three-day-forecast">
+                <h2>3-Tage-Vorhersage</h2>
+                <div class="forecast-container">
+                    <!-- Forecast day cards will be inserted here -->
+                </div>
         </div>
-       
-    </div>
+        
     
     <script src="https://kit.fontawesome.com/a692e1c39f.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/background.js"></script>
 </body>
 </html>
