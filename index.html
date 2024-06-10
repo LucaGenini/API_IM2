@@ -20,7 +20,7 @@
         <div class="weatherbody">
             <div id="loadingMessage">
                 <div class="lds-ripple"><div></div><div></div></div>
-               <div>Dein Standort wird ermittelt..</div>
+               <div>Wetterdaten werden aktualisiert..</div>
             </div>
              <div id="apiResponse" style="display:none;"></div>
             <h1 class="weathercity"></h1>
@@ -46,7 +46,12 @@
                 <div class="toggle-handle"></div>
             </label>
         </div>
-        
+        <div id="three-day-forecast" class="three-day-forecast">
+            <h2>3-Tage-Vorhersage</h2>
+            <div class="forecast-container">
+                <!-- Forecast day cards will be inserted here -->
+            </div>
+            </div>
         <div class="weatherinfo">
             <div class="weathercard">
                 <i class="fa-solid fa-temperature-full"></i>
@@ -78,16 +83,13 @@
                 </div>
             </div>
             </div>
-            <div id="three-day-forecast" class="three-day-forecast">
-                <h2>3-Tage-Vorhersage</h2>
-                <div class="forecast-container">
-                    <!-- Forecast day cards will be inserted here -->
-                </div>
+           
         </div>
         
     
     <script src="https://kit.fontawesome.com/a692e1c39f.js" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
     <script src="js/background.js"></script>
+    <script src="js/citylist.js"></script>
 </body>
 </html>

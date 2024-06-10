@@ -1,7 +1,22 @@
+
 let units = "metric";
 let currCity = ""; // Define currCity as a global variable
 
-//Location GPS//
+// Cache DOM elements
+const cityElement = document.querySelector(".weathercity");
+const datetimeElement = document.querySelector(".weatherdatetime");
+const weatherforecastElement = document.querySelector('.weatherforecast');
+const weathertemperatureElement = document.querySelector(".weathertemperature");
+const weathericonElement = document.querySelector(".weathericon");
+const weatherminmaxElement = document.querySelector(".weatherminmax");
+const weatherrealfeelElement = document.querySelector('.weatherrealfeel');
+const weatherhumidityElement = document.querySelector('.weatherhumidity');
+const weatherwindElement = document.querySelector('.weatherwind');
+const weatherpressureElement = document.querySelector('.weatherpressure');
+const loadingMessage = document.getElementById('loadingMessage');
+const suggestions = document.getElementById('suggestions');
+const searchInput = document.getElementById('search');
+
 async function getLocation() {
     return new Promise((resolve, reject) => {
 
@@ -42,17 +57,18 @@ let loadingMessageHidden = false;
 
 async function getWeather(city) {
     const API_KEY = '38a5ab5231acac96fef7ddc955511a71';
-    const loadingMessage = document.getElementById('loadingMessage');
 
     if (!loadingMessageHidden) {
         loadingMessage.style.display = 'block'; // Show the loading message
     }
 
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}&lang=de`);
-        const data = await response.json();
+        const [weatherResponse, forecastResponse] = await Promise.all([
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}&lang=de`),
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}&lang=de`)
+        ]);
 
-        const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}&lang=de`);
+        const data = await weatherResponse.json();
         const forecastData = await forecastResponse.json();
 
         loadingMessage.style.display = 'none'; // Hide the loading message
@@ -89,29 +105,17 @@ function updateForecast(forecastData) {
 }
 
 function updateWeather(data) {
-    // Selectors
-    let city = document.querySelector(".weathercity");
-    let datetime = document.querySelector(".weatherdatetime");
-    let weatherforecast = document.querySelector('.weatherforecast');
-    let weathertemperature = document.querySelector(".weathertemperature");
-    let weathericon = document.querySelector(".weathericon");
-    let weatherminmax = document.querySelector(".weatherminmax");
-    let weatherrealfeel = document.querySelector('.weatherrealfeel');
-    let weatherhumidity = document.querySelector('.weatherhumidity');
-    let weatherwind = document.querySelector('.weatherwind');
-    let weatherpressure = document.querySelector('.weatherpressure');
-
-    console.log(data);
-    city.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`;
-    datetime.innerHTML = convertTimeStamp(data.dt, data.timezone);
-    weatherforecast.innerHTML = `<p>${data.weather[0].main}`;
-    weathertemperature.innerHTML = `${data.main.temp.toFixed()}&#176`;
-    weathericon.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`;
-    weatherminmax.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p><p>Max: ${data.main.temp_max.toFixed()}&#176</p>`;
-    weatherrealfeel.innerHTML = `${data.main.feels_like.toFixed()}&#176`;
-    weatherhumidity.innerHTML = `${data.main.humidity}%`;
-    weatherwind.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph" : "m/s"}`;
-    weatherpressure.innerHTML = `${data.main.pressure} hPa`;
+    // Update the DOM elements directly
+    cityElement.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`;
+    datetimeElement.innerHTML = convertTimeStamp(data.dt, data.timezone);
+    weatherforecastElement.innerHTML = `<p>${data.weather[0].main}</p>`;
+    weathertemperatureElement.innerHTML = `${data.main.temp.toFixed()}&#176`;
+    weathericonElement.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`;
+    weatherminmaxElement.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p><p>Max: ${data.main.temp_max.toFixed()}&#176</p>`;
+    weatherrealfeelElement.innerHTML = `${data.main.feels_like.toFixed()}&#176`;
+    weatherhumidityElement.innerHTML = `${data.main.humidity}%`;
+    weatherwindElement.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph" : "m/s"}`;
+    weatherpressureElement.innerHTML = `${data.main.pressure} hPa`;
 }
 
 function convertTimeStamp(timestamp, timezone) {
@@ -138,60 +142,97 @@ function convertCountryCode(country) {
     return regionNames.of(country);
 }
 
-// search
-document.getElementById('search').addEventListener('input', function() {
-    const query = this.value;
-    if (query.length < 0) return; // Wait until the user has entered at least 1 character
+// search Suggestions
 
-    const apiKey = '471cc67340e241f6985fc6c31de9791f'; // Provided Geoapify API key
-    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&type=city&lang=de&apiKey=${apiKey}`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const suggestions = document.getElementById('suggestions');
-            suggestions.innerHTML = ''; // Clear previous suggestions
 
-            data.features.forEach(feature => {
-                if (feature.properties.city) {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = feature.properties.city;
-                    listItem.addEventListener('click', function() {
-                        // Set search box value and clear suggestions
-                        document.getElementById('search').value = feature.properties.city;
-                        suggestions.innerHTML = ''; 
+searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    if (query.length < 1) return; // Wait until the user has entered at least 1 character
 
-                        // Trigger form submission
-                        const form = document.querySelector(".weathersearch");
-                        const event = new MouseEvent('submit', {
-                            view: window,
-                            bubbles: true,
-                            cancelable: true
-                        });
-                        form.dispatchEvent(event);
-                    });
-                    suggestions.appendChild(listItem);
-                }
+    suggestions.innerHTML = ''; // Clear previous suggestions
+
+    // Filter cityList for matches
+    const matchedCities = cityList.filter(item => item.city.toLowerCase().startsWith(query));
+    if (matchedCities.length > 0) {
+        matchedCities.forEach(result => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${result.city}, ${result.country}`;
+            listItem.addEventListener('click', function() {
+                // Set search box value and clear suggestions
+                searchInput.value = result.city;
+                suggestions.innerHTML = '';
+
+                // Trigger form submission
+                const form = document.querySelector(".weathersearch");
+                const event = new MouseEvent('submit', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                form.dispatchEvent(event);
             });
-        })
-        .catch(error => console.error('Error:', error));
+            suggestions.appendChild(listItem);
+        });
+    } else {
+        // Fallback to API if no matches found in cityList:)
+        const url = `https://nominatim.openstreetmap.org/search?city=${query}&format=json&addressdetails=1&limit=5&accept-language=de`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(result => {
+                    const city = result.address.city || result.address.town;
+                    const country = result.address.country;
+
+                    if (city && country) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${city}, ${country}`;
+                        listItem.addEventListener('click', function() {
+                            // Set search box value and clear suggestions
+                            searchInput.value = city;
+                            suggestions.innerHTML = '';
+
+                            // Trigger form submission
+                            const form = document.querySelector(".weathersearch");
+                            const event = new MouseEvent('submit', {
+                                view: window,
+                                bubbles: true,
+                                cancelable: true
+                            });
+                            form.dispatchEvent(event);
+                        });
+                        suggestions.appendChild(listItem);
+                    }
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
 });
+
+
+document.addEventListener('click', function(event) {
+    const target = event.target;
+    const isSearchInput = target.matches('#search');
+    const isSuggestion = target.matches('#suggestions') || target.closest('#suggestions');
+
+    if (!isSearchInput && !isSuggestion) {
+        suggestions.innerHTML = ''; // Hide suggestions
+    }
+});
+
 
 document.querySelector(".weathersearch").addEventListener('submit', e => {
     e.preventDefault(); // Prevent form submission
 
-    currCity = document.getElementById('search').value;
+    currCity = searchInput.value;
     getWeather(currCity);
-    document.getElementById('search').value = "";
+    searchInput.value = "";
 });
 
 // units
 document.querySelector(".toggle-checkbox").addEventListener('change', function() {
-    if (this.checked) {
-        units = "imperial";
-    } else {
-        units = "metric";
-    }
+    units = this.checked ? "imperial" : "metric";
     // get weather forecast 
     getWeather(currCity);
 });
@@ -200,4 +241,3 @@ document.querySelector(".toggle-checkbox").addEventListener('change', function()
 document.addEventListener('DOMContentLoaded', () => {
     getLocation().then(getWeather).catch(error => console.error("An error occurred: ", error));
 });
-
