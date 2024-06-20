@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 body {
     background: linear-gradient(to bottom, #2f394c, darkgrey);
@@ -13,7 +12,11 @@ body {
     background-attachment: fixed;
     margin: 0;
     overflow: auto;
+    font-family: "urbane-rounded", sans-serif;
+    font-weight: 200;
+    font-style: normal;
 }
+
 
 .container {
     display: flex;
@@ -24,7 +27,7 @@ body {
     backdrop-filter: blur(3px);
     position: relative;
     z-index: 1;
-    color: #fff;
+
     padding: 2rem;
     width: 40%;
     margin: 2rem auto;
