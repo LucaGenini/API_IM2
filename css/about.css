@@ -1,4 +1,10 @@
+html {
+    height: 100%;
+}
+
 body {
+    height: auto;
+    min-height: 100%;
     background: linear-gradient(to bottom, #2f394c, darkgrey);
     background-repeat: no-repeat;
     background-size: cover;
@@ -8,20 +14,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 #container {
-    background: #17171776;
+    background: var(--mainTransparentGrey);
     padding: 20px;
     border-radius: 10px;
     width: 75%;
     margin: auto;
     text-align: center;
 }
+
 h2{
     max-width: 100%;
-    margin: 0 30px;
+    margin: 10px 30px;
 }
 img {
     float: left;
@@ -29,39 +35,66 @@ img {
     width: 100px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .personSelector {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3%;
 }
 
 .person {
+    padding: 25px;
+    border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: left; /* Aligns text to the left */
-    margin-bottom: 50px;
+    width: 30%; /* Adjust as needed */
 }
 
-h2 {
-    margin-bottom: 10px; /* Creates a 10px gap between h2 and p */
+.button {
+    margin-top: 25px;
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: var(--mainBlue);
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--mainGreen);
+}
+.personSelector .person:nth-child(1) {
+    background-color: var(--mainRed);
+}
+
+.personSelector .person:nth-child(2) {
+    background-color: var(--mainBlue);
+}
+
+.personSelector .person:nth-child(3) {
+    background-color: var(--mainGreen);
 }
 
 
 @media screen and (max-width: 600px) {
-    .person {
+    #container{
+        background-color: #ffffff00;
+    }
+    
+    .personSelector {
         flex-direction: column;
-        align-items: center;
+        align-items: center; 
     }
 
-    img {
-        margin-bottom: 10px; /* Space between the image and the h2 */
-    }
-
-    h2 {
-        margin-bottom: 10px; /* Space between the h2 and the p */
+    .person {
+        width: 100%; /* Take up the full width on small screens */
+        margin-bottom: 20px; /* Space between the .person elements */
     }
 }

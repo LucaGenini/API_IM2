@@ -6,6 +6,7 @@
     box-sizing: border-box;
 }
 body {
+    --bg-image: none;
     background: linear-gradient(to bottom, #2f394c, darkgrey);
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,6 +16,35 @@ body {
     font-family: "urbane-rounded", sans-serif;
     font-weight: 200;
     font-style: normal;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    z-index: -1;
+    opacity: 1;
+}
+
+.background-image-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
 }
 
 
@@ -23,15 +53,14 @@ body {
     flex-direction: column;
     align-items: center;
     min-width: 60vw !important;
-    background: #17171776;
-    backdrop-filter: blur(3px);
+    background: var(--mainTransparentGrey);
+    backdrop-filter: blur(10px);
     position: relative;
     z-index: 1;
-
     padding: 2rem;
     width: 40%;
     margin: 2rem auto;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     opacity: 0; /* Start invisible */
     animation: fadeIn 0.8s ease-out 0.8s forwards; /* Fade in after 1 second */
