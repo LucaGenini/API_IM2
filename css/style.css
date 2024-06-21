@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 body {
-    --bg-image: none;
     background: linear-gradient(to bottom, #2f394c, darkgrey);
     background-repeat: no-repeat;
     background-size: cover;
@@ -19,35 +18,7 @@ body {
     position: relative;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    transition: opacity 1s ease-in-out;
-    z-index: -1;
-    opacity: 1;
-}
-
-.background-image-transition {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: -2;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-}
-
-
+/*Black background blured conaintainer for the body*/
 .container {
     display: flex;
     flex-direction: column;
@@ -66,6 +37,7 @@ body::before {
     animation: fadeIn 0.8s ease-out 0.8s forwards; /* Fade in after 1 second */
 }
 
+/*Fade in animation*/
 @keyframes pulse {
     0% {
         opacity: 1;
@@ -77,14 +49,14 @@ body::before {
         opacity: 1;
     }
 }
-
+/*Loading message "Standort wird aktualisiert"*/
 #loadingMessage {
     display: grid;
     place-items: center;
     animation: pulse 2s infinite;
 }
 
-
+/*Raindrops in the background*/
 .rain {
     position: fixed;
     width: 100%;
@@ -110,9 +82,6 @@ body::before {
     }
 }
 
-
-
-
 @keyframes fadeIn {
     to {
         opacity: 1;
@@ -126,7 +95,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Place the pseudo-element behind the content */
+    z-index: -1; 
 }
 .weatherheader {
     display: flex;
@@ -173,7 +142,7 @@ input {
     font-size: 15px;
     color: #fff;
 }
-   /*Suggestions*/
+   /*Suggestions from search*/
 #suggestions {
     text-align: center;
     list-style-type: none;
@@ -201,6 +170,7 @@ input {
     background-color: #312f689c;
 }
 
+/*Fahrenheit/Celsius toggle*/
 .weatherunits {
     position: relative;
     width: 60px;
@@ -282,12 +252,7 @@ input {
     font-size: 14px;
 }
 
-.weatherforecast {
-    background: #1e1e1e;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-}
+
 /* 3Day forecast */
 .three-day-forecast {
     display: flex;
@@ -295,8 +260,8 @@ input {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    margin-top: 20px;
-    min-width: 70%; /* Ensure it takes the full width */
+    margin: 20px 2vw 0 2vw !important;
+    min-width: 40vw; /* Ensure it takes the full width */
     text-align: center; /* Center text within the container */
     background-color: #1e1e1e;
     border-radius: 10px;
@@ -352,12 +317,16 @@ input {
     font-size: 14px;
     margin: 0.5rem;
 }
-
+/*Weather Infos fühlt sich an wie, Feuchtigkeit, Wind, Luftdruck*/
 .weatherinfo {
+    width: 40vw;
+    margin-left: 10vw;
+    margin-right:  10vw;
+    margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
-    margin-top: 3rem;
+
 }
 
 .weathercard {
@@ -366,6 +335,7 @@ input {
     background: #1e1e1e;
     padding: 1rem;
     border-radius: 10px;
+    
 }
 
 .weathercard i {
@@ -377,9 +347,11 @@ input {
     font-size: 14px;
 }
 
+/*Mobile View*/
 @media(max-width: 936px){
     .container {
         width: 90%;
+        align-items: normal;
     }
 
     .weatherheader {
@@ -397,13 +369,15 @@ input {
     }
 
     .three-day-forecast{
-        padding: 10px;
+        padding: 15px;
     }
-}
-
-
-@media(max-width: 400px){
+    .forecast-card {
+        padding: 2%;
+        max-width: 30%;
+    }
     .weatherinfo {
         grid-template-columns: none;
     }
 }
+
+

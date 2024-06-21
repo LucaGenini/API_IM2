@@ -1,4 +1,3 @@
-
 let units = "metric";
 let currCity = ""; // Define currCity as a global variable
 
@@ -16,10 +15,10 @@ const weatherpressureElement = document.querySelector('.weatherpressure');
 const loadingMessage = document.getElementById('loadingMessage');
 const suggestions = document.getElementById('suggestions');
 const searchInput = document.getElementById('search');
+const rainContainer = document.querySelector('.rain');
 
 async function getLocation() {
     return new Promise((resolve, reject) => {
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 let lat = position.coords.latitude;
@@ -105,10 +104,17 @@ function updateForecast(forecastData) {
 }
 
 function updateWeather(data) {
+    /*If it rain
+    const rainConditions = [
+        "Leichter Regen", "Mäßiger Regen", "Starker Regen", "Extrem starker Regen",
+        "Gefrierender Regen", "Leichter Regenschauer", "Regenschauer", "Starkregen",
+        "Unregelmäßiger Regenschauer"
+    ];
+
     // Update the DOM elements directly
     cityElement.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`;
     datetimeElement.innerHTML = convertTimeStamp(data.dt, data.timezone);
-    weatherforecastElement.innerHTML = `<p>${data.weather[0].main}</p>`;
+    weatherforecastElement.innerHTML = `<p>${data.weather[0].description}</p>`;
     weathertemperatureElement.innerHTML = `${data.main.temp.toFixed()}&#176`;
     weathericonElement.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`;
     weatherminmaxElement.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p><p>Max: ${data.main.temp_max.toFixed()}&#176</p>`;
@@ -116,6 +122,13 @@ function updateWeather(data) {
     weatherhumidityElement.innerHTML = `${data.main.humidity}%`;
     weatherwindElement.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph" : "m/s"}`;
     weatherpressureElement.innerHTML = `${data.main.pressure} hPa`;
+
+    // Check if the current weather description matches any of the rain conditions
+    if (rainConditions.includes(data.weather[0].description)) {
+        rainContainer.style.display = 'block'; // Show rain animation
+    } else {
+        rainContainer.style.display = 'none'; // Hide rain animation
+    }
 }
 
 function convertTimeStamp(timestamp, timezone) {
@@ -136,6 +149,26 @@ function convertTimeStamp(timestamp, timezone) {
     return date.toLocaleString("de", options);
 }
 
+/*RAIN*/
+function createRaindrop() {
+    const drop = document.createElement('div');
+    drop.classList.add('drop');
+
+    drop.style.left = `${Math.random() * 100}vw`;
+    drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+    drop.style.opacity = Math.random();
+
+    rainContainer.appendChild(drop);
+
+    setTimeout(() => {
+        drop.remove();
+    }, 1000);
+}
+
+setInterval(createRaindrop, 20);
+
+
+
 // convert country code to name
 function convertCountryCode(country) {
     let regionNames = new Intl.DisplayNames(["de"], { type: "region" });
@@ -143,8 +176,6 @@ function convertCountryCode(country) {
 }
 
 // search Suggestions
-
-
 
 searchInput.addEventListener('input', function() {
     const query = this.value.toLowerCase();
@@ -242,70 +273,3 @@ document.addEventListener('DOMContentLoaded', () => {
     getLocation().then(getWeather).catch(error => console.error("An error occurred: ", error));
 });
 
-//City Background Load
-const PEXELS_API_KEY = 'ikbT8rilOGWCIEeSwTOQ4rgf88h67Uss4OSJi6y9xfiiTuU14mM4wssB';
-
-async function getCityImage(city) {
-    const url = `https://api.pexels.com/v1/search?query=${city}&per_page=1`;
-    
-    try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: PEXELS_API_KEY
-            }
-        });
-        const data = await response.json();
-        if (data.photos && data.photos.length > 0) {
-            const imageUrl = data.photos[0].src.original;
-            document.body.style.backgroundImage = `url(${imageUrl})`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-        } else {
-            console.error("No images found for this city.");
-        }
-    } catch (error) {
-        console.error("Error occurred while fetching city image: ", error);
-    }
-}
-
-// Call getCityImage function inside getWeather function after setting currCity
-async function getWeather(city) {
-    const API_KEY = '38a5ab5231acac96fef7ddc955511a71';
-
-    if (!loadingMessageHidden) {
-        loadingMessage.style.display = 'block'; // Show the loading message
-    }
-
-    try {
-        const [weatherResponse, forecastResponse] = await Promise.all([
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}&lang=de`),
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}&lang=de`)
-        ]);
-
-        const data = await weatherResponse.json();
-        const forecastData = await forecastResponse.json();
-
-        loadingMessage.style.display = 'none'; // Hide the loading message
-        loadingMessageHidden = true; // Set the flag to true
-
-        updateWeather(data);
-        updateForecast(forecastData);
-        
-        // Update city background image
-        await getCityImage(city);
-    } catch (error) {
-        console.error("Error occurred while fetching weather data: ", error);
-        if (!loadingMessageHidden) {
-            loadingMessage.style.display = 'none'; // Hide the loading message if it is still visible
-            loadingMessageHidden = true; // Set the flag to true
-        }
-    }
-}
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-    getLocation().then(city => {
-        getWeather(city);
-        getCityImage(city); // Initial background image load
-    }).catch(error => console.error("An error occurred: ", error));
-});

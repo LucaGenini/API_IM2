@@ -1,29 +1,11 @@
 // Rainfall
-const rainContainer = document.querySelector('.rain');
 
-function createRaindrop() {
-    const drop = document.createElement('div');
-    drop.classList.add('drop');
-
-    drop.style.left = `${Math.random() * 100}vw`;
-    drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
-    drop.style.opacity = Math.random();
-
-    rainContainer.appendChild(drop);
-
-    setTimeout(() => {
-        drop.remove();
-    }, 1000);
-}
-
-setInterval(createRaindrop, 20);
-
-// Call getCityImage function inside getWeather function after setting currCity
+//Background Images Swap
 const PEXELS_API_KEY = 'ikbT8rilOGWCIEeSwTOQ4rgf88h67Uss4OSJi6y9xfiiTuU14mM4wssB';
 
 async function getCityImage(city) {
     const url = `https://api.pexels.com/v1/search?query=${city}&per_page=1`;
-    
+
     try {
         const response = await fetch(url, {
             headers: {
@@ -33,7 +15,16 @@ async function getCityImage(city) {
         const data = await response.json();
         if (data.photos && data.photos.length > 0) {
             const imageUrl = data.photos[0].src.original;
-            changeBackgroundImage(imageUrl);
+            
+            // Create a new image element to preload the image
+            const img = new Image();
+            img.src = imageUrl;
+
+            // Once the image is loaded, set it as the background image
+            img.onload = () => {
+                document.body.style.backgroundImage = `url(${imageUrl})`;
+                document.body.style.backgroundSize = 'cover';
+            };
         } else {
             console.error("No images found for this city.");
         }
@@ -42,15 +33,53 @@ async function getCityImage(city) {
     }
 }
 
-function changeBackgroundImage(imageUrl) {
-    const body = document.body;
-    const transitionTime = 1000; // Transition time in milliseconds
+// Call getCityImage function inside getWeather function after setting currCity
+async function getWeather(city) {
+    const API_KEY = '38a5ab5231acac96fef7ddc955511a71';
 
-    body.style.transition = `background-image ${transitionTime}ms ease-in-out, opacity ${transitionTime}ms ease-in-out`;
-    body.style.opacity = 0;
+    if (!loadingMessageHidden) {
+        loadingMessage.style.display = 'block'; // Show the loading message
+    }
 
-    setTimeout(() => {
-        body.style.backgroundImage = `url(${imageUrl})`;
-        body.style.opacity = 1;
-    }, transitionTime);
+    try {
+        const [weatherResponse, forecastResponse] = await Promise.all([
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}&lang=de`),
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}&lang=de`)
+        ]);
+
+        const data = await weatherResponse.json();
+        const forecastData = await forecastResponse.json();
+
+        loadingMessage.style.display = 'none'; // Hide the loading message
+        loadingMessageHidden = true; // Set the flag to true
+
+        updateWeather(data);
+        updateForecast(forecastData);
+        
+        // Update city background image
+        await getCityImage(city);
+        
+        // Overblend the old background picture
+        document.body.style.backgroundBlendMode = 'overlay';
+    } catch (error) {
+        console.error("Error occurred while fetching weather data: ", error);
+        if (!loadingMessageHidden) {
+            loadingMessage.style.display = 'none'; // Hide the loading message if it is still visible
+            loadingMessageHidden = true; // Set the flag to true
+        }
+    }
 }
+
+// Initial load
+document.addEventListener('DOMContentLoaded', () => {
+    getLocation().then(city => {
+        getWeather(city);
+    }).catch(error => console.error("An error occurred: ", error));
+});
+
+// Ensure getCityImage only loads after all other JavaScript has loaded
+window.addEventListener('load', () => {
+    getLocation().then(city => {
+        getCityImage(city); // Initial background image load
+    }).catch(error => console.error("An error occurred: ", error));
+});
