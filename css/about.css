@@ -36,6 +36,7 @@ img {
     height: 100px; /* Adjust as needed */
     object-fit: cover;
     margin-bottom: 10px;
+    border: 3px solid var(--mainYellow);
 }
 
 .personSelector {
@@ -59,8 +60,8 @@ img {
     font-weight: bold;
     display: inline-block;
     padding: 10px 20px;
-    color: white;
-    background-color: var(--mainBlue);
+    color: rgb(89, 89, 89);
+    background-color: var(--mainYellow);
     text-decoration: none;
     text-align: center;
     border-radius: 5px;
@@ -83,7 +84,7 @@ img {
 }
 
 
-@media screen and (max-width: 600px) {
+@media(max-width: 936px) {
     #container{
         background-color: #ffffff00;
     }

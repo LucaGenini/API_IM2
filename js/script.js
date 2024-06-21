@@ -104,7 +104,7 @@ function updateForecast(forecastData) {
 }
 
 function updateWeather(data) {
-    /*If it rain
+    
     const rainConditions = [
         "Leichter Regen", "Mäßiger Regen", "Starker Regen", "Extrem starker Regen",
         "Gefrierender Regen", "Leichter Regenschauer", "Regenschauer", "Starkregen",
@@ -186,7 +186,7 @@ searchInput.addEventListener('input', function() {
     // Filter cityList for matches
     const matchedCities = cityList.filter(item => item.city.toLowerCase().startsWith(query));
     if (matchedCities.length > 0) {
-        matchedCities.forEach(result => {
+        matchedCities.slice(0, 4).forEach(result => {
             const listItem = document.createElement('li');
             listItem.textContent = `${result.city}, ${result.country}`;
             listItem.addEventListener('click', function() {
@@ -206,7 +206,7 @@ searchInput.addEventListener('input', function() {
             suggestions.appendChild(listItem);
         });
     } else {
-        // Fallback to API if no matches found in cityList:)
+        // Fallback to API if no matches found in cityList
         const url = `https://nominatim.openstreetmap.org/search?city=${query}&format=json&addressdetails=1&limit=5&accept-language=de`;
 
         fetch(url)
@@ -241,7 +241,6 @@ searchInput.addEventListener('input', function() {
     }
 });
 
-
 document.addEventListener('click', function(event) {
     const target = event.target;
     const isSearchInput = target.matches('#search');
@@ -252,7 +251,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-
 document.querySelector(".weathersearch").addEventListener('submit', e => {
     e.preventDefault(); // Prevent form submission
 
@@ -260,6 +258,8 @@ document.querySelector(".weathersearch").addEventListener('submit', e => {
     getWeather(currCity);
     searchInput.value = "";
 });
+
+//End of search suggestions
 
 // units
 document.querySelector(".toggle-checkbox").addEventListener('change', function() {
@@ -272,4 +272,6 @@ document.querySelector(".toggle-checkbox").addEventListener('change', function()
 document.addEventListener('DOMContentLoaded', () => {
     getLocation().then(getWeather).catch(error => console.error("An error occurred: ", error));
 });
+
+
 
