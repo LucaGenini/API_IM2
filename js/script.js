@@ -39,7 +39,10 @@ async function getLocation() {
             }, error => {
                 currCity = "Chur";
                 resolve(currCity);
-                alert("Ihr aktueller Standort ist deaktiviert");
+                if (!loadingMessageHidden) {
+                    alert("Ihr aktueller Standort ist deaktiviert");
+                    loadingMessageHidden = true; // Set the flag to true
+                }
                 console.error("Error occurred while getting location: ", error);
             });
         } else {

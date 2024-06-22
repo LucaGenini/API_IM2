@@ -27,6 +27,8 @@ async function getCityImage(city) {
             };
         } else {
             console.error("No images found for this city.");
+            document.body.style.backgroundImage = "url('https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg')";
+            document.body.style.backgroundSize = 'cover';
         }
     } catch (error) {
         console.error("Error occurred while fetching city image: ", error);
