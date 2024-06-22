@@ -10,10 +10,12 @@
 # Prozessdokumentation
 
 ## Features
-Die Webseite kann sowohl das Wetter der eigenen Location als auch das einer in das Suchfeld eingegebenen Location anzeigen. Wenn keine Location angegeben wird, wird standardmäßig der Standort Chur verwendet. Zudem unterscheidet die Webseite zwischen klarem Wetter und Regen, was durch animierte Regentropfen bei Regen angezeigt wird. Um die Wetterdaten grafisch ansprechend darzustellen, wird das Hintergrundbild mithilfe einer weiteren API an die jeweilige Location angepasst.
+Die Webseite kann sowohl das Wetter ders eigenen Standorts als auch das einer in das Suchfeld eingegebenen Location anzeigen. Wenn der User die Ortungsdienste ausgeschaltet sind hat, wird standardmässig der Standort Chur verwendet. (Für das Umwandeln der Ortungsdaten von Llatitude und Longitude in eine Stadt wird bigdatacloud.net API verwendet). Um die Wetterdaten grafisch ansprechend darzustellen, wird das Hintergrundbild mithilfe einer der Pexels API an die jeweilige Location angepasst.
+Man kann zwischen Farenheit und Celsius auswählen. 
+Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relevantere Städte zuerst anzuzeigen, statt alphabetisch geordnete, wurde eine Liste(Array) mit wichtigen Städten erstellt.So kommt beim Eintippen von z.B. "New" zuerst "New York, USA", statt "New Abirem, Ghana", vorgeschlagen. (Siehe Details unten Bei JavaScript citylist.js) Falls die Stadt nicht in der citylist.js gespeichert ist, wird die API von https://api.geoapify.com verwendet, die im script.js zu finden ist.
 
-Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relevantere Städte zuerst anzuzeigen, statt alphabetisch geordnete, wurde eine Liste mit wichtigen Städten erstellt. Wenn beim Eintippen von z.B. "New" zuerst New York, USA, statt New Abirem, Ghana, vorgeschlagen werden soll, greift die Webseite auf diese Liste zu. Falls die Stadt nicht in der citylist.js gespeichert ist, wird die API von https://api.geoapify.com verwendet, die im script.js zu finden ist.
-
+-Die Seite wurde für Desktop und Mobile optimiert und ist responsive.
+-Code wurde W3 validiert. Keine Fehler, eine Warnung beim h1, die aber bewusst ignoriert werden kann, da der h1 Text vom JavaScript aus eingefügt wird.
 
 ## Erklärung der einzelnen Dateien (wichtig)
 
@@ -29,7 +31,7 @@ Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relev
 ### JavaScript:
 - script.js = Hauptscript für Homepage
 
-- citiylist.js = Um zuerst relevante Städte zu zeigen statt alphabetisch mit der API (Also das beim Eintippen von z.B. New zuerst New York, USA als Vorschlag kommt, statt New Abirem, Ghana) wurde eine Liste mit relevanten Städten gemacht -->Falls die Stadt nicht in der citiylist.js gespeichert ist, wird die https:///api.geoapify.com angesteuert, welche im script.js auffindbar ist
+- citylist.js = Um zuerst relevante Städte zu zeigen statt alphabetisch mit der API (Also das beim Eintippen von z.B. New zuerst New York, USA als Vorschlag kommt, statt New Abirem, Ghana) wurde eine Liste mit relevanten Städten gemacht -->Falls die Stadt nicht in der citylist.js gespeichert ist, wird die https:///api.geoapify.com angesteuert, welche im script.js auffindbar ist
 
 - background.js = Sich nach Stadt wechselndes Hintergrundbild, API https://api.pexels.com
 
@@ -49,3 +51,5 @@ Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relev
 - Es wurden teilweise Codefragmente von dieser Wetter-App verwendet sowie Inspiration vom Design dieser Wetter-Applikation genommen: https://codepen.io/gbopola/pen/gOdKqqr
 - Es wurde mit https://www.w3schools.com/ und https://developer.mozilla.org/ gearbeitet; dabei wurden Code-Elemente davon verwendet, nachgeschlagen und implementiert.
 - Die "Ihr Standort wird aktualisiert" Animation stammt von https://loading.io/css/
+- Schriften von Adobe Fonts
+- Icons Google Icons, OpenWeather Icons 
