@@ -30,8 +30,11 @@ async function getCityImage(city) {
             document.body.style.backgroundImage = "url('https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg')";
             document.body.style.backgroundSize = 'cover';
         }
+  
     } catch (error) {
         console.error("Error occurred while fetching city image: ", error);
+        document.body.style.backgroundImage = "url('https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg')";
+        document.body.style.backgroundSize = 'cover';
     }
 }
 

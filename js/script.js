@@ -1,5 +1,5 @@
 let units = "metric";
-let currCity = "Chur"; // Define currCity as a global variable
+let currCity = "Chur"; 
 
 // Cache DOM elements
 const cityElement = document.querySelector(".weathercity");
@@ -69,10 +69,11 @@ async function getLocation() {
                 currCity = "Chur";
                 resolve(currCity);
                 if (!loadingMessageHidden) {
-                    alert("Ihr aktueller Standort ist deaktiviert" + currCity);
+                    alert("Ihr aktueller Standort ist deaktiviert");
                     loadingMessageHidden = true; // Set the flag to true
                 }
-            }, { timeout: 5000 }); // Set a timeout of 5 seconds for geolocation request
+            }, { timeout: 5000 }
+        ); // Set a timeout of 5 seconds for geolocation request
         } else {
             resolve(currCity);
             alert("Geolocation wird nicht unterstützt von Ihrem Browser.");
