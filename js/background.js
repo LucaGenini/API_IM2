@@ -1,6 +1,6 @@
 // Rainfall
 
-//Background Images Swap
+//Background Images Swaps
 const PEXELS_API_KEY = 'ikbT8rilOGWCIEeSwTOQ4rgf88h67Uss4OSJi6y9xfiiTuU14mM4wssB';
 
 async function getCityImage(city) {
@@ -15,7 +15,7 @@ async function getCityImage(city) {
         const data = await response.json();
         if (data.photos && data.photos.length > 0) {
             const imageUrl = data.photos[0].src.original;
-            
+
             // Create a new image element to preload the image
             const img = new Image();
             img.src = imageUrl;
@@ -57,10 +57,10 @@ async function getWeather(city) {
 
         updateWeather(data);
         updateForecast(forecastData);
-        
+
         // Update city background image
         await getCityImage(city);
-        
+
         // Overblend the old background picture
         document.body.style.backgroundBlendMode = 'overlay';
     } catch (error) {

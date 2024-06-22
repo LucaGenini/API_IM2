@@ -1,5 +1,5 @@
 let units = "metric";
-let currCity = ""; // Define currCity as a global variable
+let currCity = "Chur"; // Define currCity as a global variable
 
 // Cache DOM elements
 const cityElement = document.querySelector(".weathercity");
@@ -17,7 +17,7 @@ const suggestions = document.getElementById('suggestions');
 const searchInput = document.getElementById('search');
 const rainContainer = document.querySelector('.rain');
 
-async function getLocation() {
+                async function getLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -44,7 +44,7 @@ async function getLocation() {
                     loadingMessageHidden = true; // Set the flag to true
                 }
                 console.error("Error occurred while getting location: ", error);
-            });
+            }, { timeout: 5000 }); // Set a timeout of 5 seconds for geolocation request
         } else {
             currCity = "Chur";
             resolve(currCity);
@@ -107,7 +107,7 @@ function updateForecast(forecastData) {
 }
 
 function updateWeather(data) {
-    
+
     const rainConditions = [
         "Leichter Regen", "Mäßiger Regen", "Starker Regen", "Extrem starker Regen",
         "Gefrierender Regen", "Leichter Regenschauer", "Regenschauer", "Starkregen",
@@ -179,8 +179,7 @@ function convertCountryCode(country) {
 }
 
 // search Suggestions
-
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', function () {
     const query = this.value.toLowerCase();
     if (query.length < 1) return; // Wait until the user has entered at least 1 character
 
@@ -192,7 +191,7 @@ searchInput.addEventListener('input', function() {
         matchedCities.slice(0, 4).forEach(result => {
             const listItem = document.createElement('li');
             listItem.textContent = `${result.city}, ${result.country}`;
-            listItem.addEventListener('click', function() {
+            listItem.addEventListener('click', function () {
                 // Set search box value and clear suggestions
                 searchInput.value = result.city;
                 suggestions.innerHTML = '';
@@ -209,20 +208,22 @@ searchInput.addEventListener('input', function() {
             suggestions.appendChild(listItem);
         });
     } else {
-        // Fallback to API if no matches found in cityList
-        const url = `https://nominatim.openstreetmap.org/search?city=${query}&format=json&addressdetails=1&limit=5&accept-language=de`;
+        // Fallback to Geoapify API if no matches found in cityList
+        const apiKey = '471cc67340e241f6985fc6c31de9791f'; // Provided Geoapify API key
+        const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&type=city&lang=de&apiKey=${apiKey}`;
 
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                data.forEach(result => {
-                    const city = result.address.city || result.address.town;
-                    const country = result.address.country;
+                data.features.forEach(feature => {
+                    const city = feature.properties.city;
+                    const country = feature.properties.country;
 
-                    if (city && country) {
+                    // Ensure the city matches the query exactly (considering accents and special characters)
+                    if (city && country && city.toLowerCase().startsWith(query)) {
                         const listItem = document.createElement('li');
                         listItem.textContent = `${city}, ${country}`;
-                        listItem.addEventListener('click', function() {
+                        listItem.addEventListener('click', function () {
                             // Set search box value and clear suggestions
                             searchInput.value = city;
                             suggestions.innerHTML = '';
@@ -244,7 +245,7 @@ searchInput.addEventListener('input', function() {
     }
 });
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const target = event.target;
     const isSearchInput = target.matches('#search');
     const isSuggestion = target.matches('#suggestions') || target.closest('#suggestions');
@@ -262,10 +263,12 @@ document.querySelector(".weathersearch").addEventListener('submit', e => {
     searchInput.value = "";
 });
 
+
 //End of search suggestions
 
+
 // units
-document.querySelector(".toggle-checkbox").addEventListener('change', function() {
+document.querySelector(".toggle-checkbox").addEventListener('change', function () {
     units = this.checked ? "imperial" : "metric";
     // get weather forecast 
     getWeather(currCity);

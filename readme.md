@@ -1,12 +1,23 @@
-# Prozessdokumentation
+# WEBSITE_URL
+706575-3.web.fhgr.ch
 
+# Prozessdokumentation
+- variables.css = alle standart Fraben die mehrmals verwendet werden
+- preset.css = alle css code Schnipsel die auf der About und auf der Hompepage werwendet werden
+- buffer.css = A"Ihr Standort wird aktualsiert" Animation
+- style.css = CSS für Homepage
+
+- script.js = Hauptscript für Homepage
+- Um zuerst relevante Städte zu zeigen statt alphabetisch mit der API (Also das beim Eintippen von z.B. New zuerst New York, USA als Vorschlag kommt, statt New Abirem, Ghana) wurde eine Liste mit relvanten Städten gemacht = citiylist.js -->Falls die Stadt nicht in der citiylist.js gespeichert ist, wird die https:///api.geoapify.com angesteuert, welche im script.js auffindbar ist
+- background.js = Sich nach Stadt wechselndes Hintergrundbild, API https://api.pexels.com
 # USED API's: 
-- Weather info openweathermap.com
-- Location info https://api.bigdatacloud.net/
--
+- Weather info https://openweathermap.com
+- Current Location Info https://api.bigdatacloud.net/
+- Background images of designated citiies https://api.pexels.com
+- Search suggestions https:///api.geoapify.com
 
 # Sources
-https://loading.io/css/ for get location animation
+
 
 
 ## Learnings
@@ -22,3 +33,4 @@ https://loading.io/css/ for get location animation
 ## Externe Quellen
 Es wurde teils Codefragmente von dieser Wetter App verewendet sowie auch Inspiration vom design von dieser Wetter Applikation genommen:  https://codepen.io/gbopola/pen/gOdKqqr
 Es wurde mit https://www.w3schools.com/ & https://developer.mozilla.org/ gearbeitet, so wurden Code Elemente davon verwendet, nachgeschaut und implementiert 
+https://loading.io/css/ "Ihr Standort wird aktualsiert" Animation

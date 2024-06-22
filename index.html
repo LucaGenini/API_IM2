@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,21 +12,26 @@
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="https://use.typekit.net/lxr4rcr.css">
 </head>
+
 <body>
     <div class="rain"></div>
     <div class="container">
         <div class="weatherheader">
             <form class="weathersearch" id="city-form">
-                <input type="text" id="search" class="weathersearchform" placeholder="Stadtname eingeben" autocomplete="off">
+                <input type="text" id="search" class="weathersearchform" placeholder="Stadtname eingeben"
+                    autocomplete="off">
                 <ul id="suggestions"></ul>
             </form>
         </div>
         <div class="weatherbody">
             <div id="loadingMessage">
-                <div class="lds-ripple"><div></div><div></div></div>
-               <div>Wetterdaten werden aktualisiert..</div>
+                <div class="lds-ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div>Wetterdaten werden aktualisiert..</div>
             </div>
-             <div id="apiResponse" style="display:none;"></div>
+            <div id="apiResponse" style="display:none;"></div>
             <h1 class="weathercity"></h1>
             <div class="weatherdatetime">
             </div>
@@ -35,72 +41,64 @@
             <p class="weathertemperature">
             </p>
             <div class="weatherminmax">
-                <p>Min: 12&#176</p>
-                <p>Max: 16&#176</p>
+                <p>Min: 12&#176;;</p>
+                <p>Max: 16&#176;</p>
             </div>
         </div>
         <div class="weatherunits">
             <input type="checkbox" id="toggle" class="toggle-checkbox">
-            <label for="toggle" class="toggle-label">
-                <div class="toggle-text">
-                    <div class="toggle-metric">°C</div>
-                    <div class="toggle-imperial">°F</div>
-                </div>
-                <div class="toggle-handle"></div>
-            </label>
+            <div class="toggle-text">
+                <div class="toggle-metric">°C</div>
+                <div class="toggle-imperial">°F</div>
+            </div>
+            <label for="toggle" class="toggle-label"></label>
+            <div class="toggle-handle"></div>
         </div>
         <div id="three-day-forecast" class="three-day-forecast">
             <h2>3-Tage-Vorhersage</h2>
             <div class="forecast-container">
                 <!-- Forecast day cards will be inserted here -->
             </div>
-            </div>
+        </div>
         <div class="weatherinfo">
             <div class="weathercard">
                 <i class="fa-solid fa-temperature-full"></i>
                 <div>
-                    <b>
-                        <p>Fühlt sich an wie</p>
-                    </b>
-                    <p class="weatherrealfeel">18&#176</p>
+                    <b>Fühlt sich an wie</b>
+                    <p class="weatherrealfeel">18&#176;</p>
                 </div>
             </div>
-            
+
             <div class="weathercard">
                 <i class="fa-solid fa-droplet"></i>
                 <div>
-                    <b>
-                        <p>Feuchtigkeit</p>
-                    </b>
-                    <p class="weatherhumidity">18&#176</p>
+                    <p><b>Feuchtigkeit</b></p>
+                    <p class="weatherhumidity">18&#176;</p>
                 </div>
             </div>
             <div class="weathercard">
                 <i class="fa-solid fa-wind"></i>
                 <div>
-                    <b>
-                        <p>Wind</p>
-                    </b>
-                    <p class="weatherwind">18&#176</p>
+                    <p><b>Wind</b></p>
+                    <p class="weatherwind">18&#176;</p>
                 </div>
             </div>
             <div class="weathercard">
                 <i class="fa-solid fa-gauge-high"></i>
                 <div>
-                    <b>
-                        <p>Luftdruck</p>
-                    </b>
-                    <p class="weatherpressure">18&#176</p>
+                    <b>Luftdruck</b>
+                    <p class="weatherpressure">18&#176;</p>
                 </div>
             </div>
-            </div>
-            <a href="about" class="button">Über uns</a>
         </div>
-        
-    
+        <a href="about" class="button">Über uns</a>
+    </div>
+
+
     <script src="https://kit.fontawesome.com/a692e1c39f.js" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
     <script src="js/background.js"></script>
     <script src="js/citylist.js"></script>
 </body>
+
 </html>
