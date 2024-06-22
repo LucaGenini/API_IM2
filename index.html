@@ -32,19 +32,26 @@
                 <div>Wetterdaten werden aktualisiert..</div>
             </div>
             <div id="apiResponse" style="display:none;"></div>
+            <!--Ortschaft z.B. Zürich-->
             <h1 class="weathercity"></h1>
+            <!--Datum-->
             <div class="weatherdatetime">
             </div>
+            <!--Wetterzustand z.B. Regen-->
             <div class="weatherforecast"></div>
+            <!--Wettericon-->
             <div class="weathericon">
             </div>
+            <!--Temperatur-->
             <p class="weathertemperature">
             </p>
+            <!--Max und mindest Temperatur-->
             <div class="weatherminmax">
                 <p>Min: 12&#176;;</p>
                 <p>Max: 16&#176;</p>
             </div>
         </div>
+        <!--Wettereinheiten Toggle (Celcius/Fahrenheit)-->
         <div class="weatherunits">
             <input type="checkbox" id="toggle" class="toggle-checkbox">
             <div class="toggle-text">
@@ -54,12 +61,14 @@
             <label for="toggle" class="toggle-label"></label>
             <div class="toggle-handle"></div>
         </div>
+        <!--3-Tage-Wettervorhersage-->
         <div id="three-day-forecast" class="three-day-forecast">
             <h2>3-Tage-Vorhersage</h2>
             <div class="forecast-container">
                 <!-- Forecast day cards will be inserted here -->
             </div>
         </div>
+        <!--Wetterinformationen z.B. Luftdruck-->
         <div class="weatherinfo">
             <div class="weathercard">
                 <i class="fa-solid fa-temperature-full"></i>
@@ -91,6 +100,7 @@
                 </div>
             </div>
         </div>
+        <!--Über uns Knopf-->
         <a href="about" class="button">Über uns</a>
     </div>
 
