@@ -28,6 +28,8 @@ Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relev
 
 - style.css = CSS für Homepage
 
+- manifest.json = android icon für add to homescreen
+
 ### JavaScript:
 - script.js = Hauptscript für Homepage
 
