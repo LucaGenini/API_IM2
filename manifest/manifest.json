@@ -1,0 +1,15 @@
+{
+    "name": "Weather App",
+    "short_name": "WeatherAPP",
+    "icons": [
+      {
+        "src": "../images/apple-touch-icon-180x180.png",
+        "sizes": "180x180",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000"
+  }
