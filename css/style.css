@@ -439,6 +439,11 @@ input:not(:focus) {
         width: 90%;
         align-items: normal;
     }
+    .button {
+        max-width: 30%;
+        text-align: center;
+        margin: 0 auto;
+    }
 
     .weatherheader {
         flex-direction: column;
