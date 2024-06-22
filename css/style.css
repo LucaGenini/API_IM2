@@ -15,8 +15,52 @@ body {
     font-style: normal;
     position: relative;
 }
+/*Firefox Workaround Pop Up */
+.custom-alert {
+    color: black;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.759);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+    text-align: center;
+    border-radius: 10px;
+    backdrop-filter: blur(20px);
+}
+.custom-alert img {
+    max-width: 20vw;
+    border-radius: 10px;
+    margin-bottom: 10px;
 
-
+}
+.custom-alert button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: var(--mainBlue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.custom-alert button:hover {
+    background-color: #0056b3;
+}
+.custom-alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+/*End of Firefox Workaround Pop Up */
 
 /*Black background blured conaintainer for the body*/
 .container {

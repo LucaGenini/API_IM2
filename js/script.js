@@ -17,7 +17,36 @@ const suggestions = document.getElementById('suggestions');
 const searchInput = document.getElementById('search');
 const rainContainer = document.querySelector('.rain');
 
-                async function getLocation() {
+//Workaround for Firefox
+function isFirefox() {
+    return typeof InstallTrigger !== 'undefined';
+}
+
+function showCustomAlert() {
+    document.getElementById('customAlert').style.display = 'block';
+    document.getElementById('customAlertOverlay').style.display = 'block';
+}
+
+function closeCustomAlert() {
+    document.getElementById('customAlert').style.display = 'none';
+    document.getElementById('customAlertOverlay').style.display = 'none';
+    localStorage.setItem('alertShown', 'true');
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+}
+
+// Check if the alert has been shown before
+const alertShown = localStorage.getItem('alertShown');
+
+// Show the custom alert only if the user is using Firefox and the alert hasn't been shown before
+if (isFirefox() && !alertShown) {
+    showCustomAlert();
+}
+
+
+//Waether
+async function getLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -40,13 +69,11 @@ const rainContainer = document.querySelector('.rain');
                 currCity = "Chur";
                 resolve(currCity);
                 if (!loadingMessageHidden) {
-                    alert("Ihr aktueller Standort ist deaktiviert");
+                    alert("Ihr aktueller Standort ist deaktiviert" + currCity);
                     loadingMessageHidden = true; // Set the flag to true
                 }
-                console.error("Error occurred while getting location: ", error);
             }, { timeout: 5000 }); // Set a timeout of 5 seconds for geolocation request
         } else {
-            currCity = "Chur";
             resolve(currCity);
             alert("Geolocation wird nicht unterstützt von Ihrem Browser.");
             reject("Geolocation is not supported by this browser.");
@@ -54,7 +81,7 @@ const rainContainer = document.querySelector('.rain');
     });
 }
 
-//Weather////Weather//
+//Weather//
 let loadingMessageHidden = false;
 
 async function getWeather(city) {
@@ -70,6 +97,10 @@ async function getWeather(city) {
             fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}&lang=de`)
         ]);
 
+        if (!weatherResponse.ok || !forecastResponse.ok) {
+            throw new Error('Failed to fetch weather data');
+        }
+
         const data = await weatherResponse.json();
         const forecastData = await forecastResponse.json();
 
@@ -84,6 +115,7 @@ async function getWeather(city) {
             loadingMessage.style.display = 'none'; // Hide the loading message if it is still visible
             loadingMessageHidden = true; // Set the flag to true
         }
+        alert("Fehler beim Abrufen der Wetterdaten.");
     }
 }
 
@@ -151,6 +183,18 @@ function convertTimeStamp(timestamp, timezone) {
     };
     return date.toLocaleString("de", options);
 }
+
+// Function to convert country code to country name
+function convertCountryCode(code) {
+    // You might want to use a mapping or an API to convert country codes to country names
+    // This is a simple placeholder implementation
+    const countryNames = {
+        "DE": "Deutschland",
+        // Add more country codes and names as needed
+    };
+    return countryNames[code] || code;
+}
+
 
 /*RAIN*/
 function createRaindrop() {

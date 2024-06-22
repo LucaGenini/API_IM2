@@ -14,6 +14,16 @@
 </head>
 
 <body>
+    <!--Firefox Work Around-->
+    <div class="custom-alert-overlay" id="customAlertOverlay"></div>
+
+    <div class="custom-alert" id="customAlert">
+        <img src="images/firefox.webp" alt="Example Image">
+        <p>Sie verwenden Firefox: Um die Wetterdaten zu sehen, klicken Sie auf <b>"Meine Antwort merken"</b>, bei der Meldung "Möchten Sie den Standort
+            verwenden?" </p>
+        <button onclick="closeCustomAlert()">OK</button>
+    </div>
+    <!--End Firefox Work Around-->
     <div class="rain"></div>
     <div class="container">
         <div class="weatherheader">

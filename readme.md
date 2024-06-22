@@ -1,5 +1,5 @@
 # WEBSITE_URL
-706575-3.web.fhgr.ch
+[706575-3.web.fhgr.ch](https://706575-3.web.fhgr.ch/)
 
 # Verwendete API's: 
 - Weather info https://openweathermap.com
@@ -38,6 +38,7 @@ Die Webseite kann... (Timos Text)
 
 # Pains
 - Für das Projekt wurden vier verschiedene APIs verwendet, die alle miteinander kommunizieren müssen. Die Herstellung der Kommunikation zwischen den APIs war eine Herausforderung.
+- Während alle Dateien auf Chrome, Edge und Safari reiblunglos laufen, brauchte Firefox immer eine Sonderbehandlung und einen Work-Around um zu funktionieren.
 
 # KI-Einsatz
 - Zum Erstellen der HTML-, CSS- und JavaScript-Dateien, für Empfehlungen von kostenlosen APIs, das Auslesen der Daten via API sowie das Optimieren und Korrigieren von Code wurden ChatGPT 4o (chatgpt.com), GitHub CoPilot (github.com/features/copilot) und Google Gemini (gemini.google.com) verwendet. Der Code wurde manuell bearbeitet, korrigiert und optimiert.
