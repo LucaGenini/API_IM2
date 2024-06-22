@@ -12,7 +12,7 @@ body{
     font-weight: bold;
     display: inline-block;
     padding: 10px 20px;
-    color: rgb(89, 89, 89);
+    color: rgb(0, 0, 0);
     background-color: var(--mainYellow);
     text-decoration: none;
     text-align: center;
