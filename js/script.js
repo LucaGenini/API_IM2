@@ -45,7 +45,7 @@ if (isFirefox() && !alertShown) {
 }
 
 
-//Waether
+//Waether Location tracking
 async function getLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
@@ -81,7 +81,7 @@ async function getLocation() {
     });
 }
 
-//Weather//
+//Weather API
 let loadingMessageHidden = false;
 
 async function getWeather(city) {
@@ -196,7 +196,7 @@ function convertCountryCode(code) {
 }
 
 
-/*RAIN*/
+/*RAIN if its raining in a City*/
 function createRaindrop() {
     const drop = document.createElement('div');
     drop.classList.add('drop');
