@@ -10,7 +10,9 @@
 # Prozessdokumentation
 
 ## Features
-Die Webseite kann... (Timos Text)
+Die Webseite kann sowohl das Wetter der eigenen Location als auch das einer in das Suchfeld eingegebenen Location anzeigen. Wenn keine Location angegeben wird, wird standardmäßig der Standort Chur verwendet. Zudem unterscheidet die Webseite zwischen klarem Wetter und Regen, was durch animierte Regentropfen bei Regen angezeigt wird. Um die Wetterdaten grafisch ansprechend darzustellen, wird das Hintergrundbild mithilfe einer weiteren API an die jeweilige Location angepasst.
+
+Beim Klicken auf das Suchfeld werden spezifische Vorschläge angezeigt. Um relevantere Städte zuerst anzuzeigen, statt alphabetisch geordnete, wurde eine Liste mit wichtigen Städten erstellt. Wenn beim Eintippen von z.B. "New" zuerst New York, USA, statt New Abirem, Ghana, vorgeschlagen werden soll, greift die Webseite auf diese Liste zu. Falls die Stadt nicht in der citylist.js gespeichert ist, wird die API von https://api.geoapify.com verwendet, die im script.js zu finden ist.
 
 
 ## Erklärung der einzelnen Dateien (wichtig)
@@ -27,7 +29,7 @@ Die Webseite kann... (Timos Text)
 ### JavaScript:
 - script.js = Hauptscript für Homepage
 
-- citiylist.js = Um zuerst relevante Städte zu zeigen statt alphabetisch mit der API (Also das beim Eintippen von z.B. New zuerst New York, USA als Vorschlag kommt, statt New Abirem, Ghana) wurde eine Liste mit relvanten Städten gemacht -->Falls die Stadt nicht in der citiylist.js gespeichert ist, wird die https:///api.geoapify.com angesteuert, welche im script.js auffindbar ist
+- citiylist.js = Um zuerst relevante Städte zu zeigen statt alphabetisch mit der API (Also das beim Eintippen von z.B. New zuerst New York, USA als Vorschlag kommt, statt New Abirem, Ghana) wurde eine Liste mit relevanten Städten gemacht -->Falls die Stadt nicht in der citiylist.js gespeichert ist, wird die https:///api.geoapify.com angesteuert, welche im script.js auffindbar ist
 
 - background.js = Sich nach Stadt wechselndes Hintergrundbild, API https://api.pexels.com
 
