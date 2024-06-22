@@ -434,16 +434,29 @@ input:not(:focus) {
 }
 
 /*Mobile View*/
+
 @media(max-width: 936px) {
+   
+    #suggestions {
+        font-size: 20px; /* Adjust the font size as needed */
+        margin: auto;
+    }
+    #suggestions li {
+       margin-top: 15px; /* Adjust the font size as needed */
+    }
     .container {
         width: 90%;
         align-items: normal;
     }
-    .button {
-        max-width: 30%;
-        text-align: center;
-        margin: 0 auto;
+    input[type="text"] {
+        margin: auto;
+        width: 100%;
+        padding: 20px; 
+        border-radius: 35px;
+        font-size: 20px;
     }
+
+
 
     .weatherheader {
         flex-direction: column;

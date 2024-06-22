@@ -68,12 +68,8 @@ async function getLocation() {
             }, error => {
                 currCity = "Chur";
                 resolve(currCity);
-                if (!loadingMessageHidden) {
-                    alert("Ihr aktueller Standort ist deaktiviert");
-                    loadingMessageHidden = true; // Set the flag to true
-                }
-            }, { timeout: 5000 }
-        ); // Set a timeout of 5 seconds for geolocation request
+                console.error("Error occurred while getting location: ", error);
+            }); // Set a timeout of 5 seconds for geolocation request
         } else {
             resolve(currCity);
             alert("Geolocation wird nicht unterstützt von Ihrem Browser.");
