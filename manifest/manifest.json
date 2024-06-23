@@ -1,6 +1,6 @@
 {
     "name": "Weather App",
-    "short_name": "WeatherAPP",
+    "short_name": "Weather",
     "icons": [
       {
         "src": "../images/apple-touch-icon-180x180.png",
