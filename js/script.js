@@ -45,7 +45,7 @@ if (isFirefox() && !alertShown) {
 }
 
 
-//Waether Location tracking
+//Waether Location Geolocation tracking
 async function getLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
@@ -179,17 +179,6 @@ function convertTimeStamp(timestamp, timezone) {
         hour12: true,
     };
     return date.toLocaleString("de", options);
-}
-
-// Function to convert country code to country name
-function convertCountryCode(code) {
-    // You might want to use a mapping or an API to convert country codes to country names
-    // This is a simple placeholder implementation
-    const countryNames = {
-        "DE": "Deutschland",
-        // Add more country codes and names as needed
-    };
-    return countryNames[code] || code;
 }
 
 
